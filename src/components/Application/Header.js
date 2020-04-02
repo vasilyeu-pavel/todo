@@ -1,28 +1,31 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 
+import { CompleteButton } from '../Buttons';
+import { Form } from '../Form';
 import { IoIosArrowDown } from 'react-icons/io';
 
-const ChecksAllButton = ({ className, children }) => (
-    <span className={className}>
-        {children}
-    </span>
-);
+import { completeAll } from '../../providers/store/actions';
+import { store } from '../../providers/store/store';
 
-const StyledButton = styled(ChecksAllButton)`
-  font-size: 22px;
-`;
+const Header = ({ className }) => {
+    const { dispatcher } = useContext(store);
 
-const Header = ({ className, children }) => (
-    <div className={`row p-3  ${className}`}>
-        <div className="col-1">
-            <StyledButton>
-                <IoIosArrowDown />
-            </StyledButton>
+    const actions = dispatcher({ completeAll });
+
+    return (
+        <div className={`row p-3  ${className}`}>
+            <div className="col-1">
+                <CompleteButton handleClick={actions.completeAll}>
+                    {() => <IoIosArrowDown />}
+                </CompleteButton>
+            </div>
+            <div className="col-11">
+                <Form />
+            </div>
         </div>
-        <div className="col-11">{children}</div>
-    </div>
-);
+    );
+};
 
 const StyledHeader = styled(Header)`
   box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);

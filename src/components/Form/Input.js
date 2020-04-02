@@ -7,7 +7,7 @@ const Input = ({ className, handleChange, name, value = '' }) => {
             <input
                 onChange={({ target: { value } }) => handleChange({ value, name })}
                 name={name}
-                className={className}
+                className={`${className} p-2`}
                 placeholder="Enter task"
                 value={value}
             />
@@ -20,7 +20,6 @@ const StyledInput = styled(Input)`
     line-height: 1.4em;
     border: 0;
     color: inherit;
-    padding: 6px;
    
     &:focus {
             border-color: #FFFFF;

@@ -1,13 +1,16 @@
-import { ADD } from './constants';
+import { ADD, COMPLETE_ALL } from './constants';
 
-const withId = obj => ({
-  ...obj,
-  id: Date.now(),
-});
+import { withAllFields } from '../../mixins';
 
-export const addTask = async ({ getState, dispatch }, values) => {
+export const addTask = async ({ dispatch }, values) => {
     return dispatch({
         type: ADD,
-        payload: withId(values),
+        payload: withAllFields(values),
+    });
+};
+
+export const completeAll = async ({ dispatch }) => {
+    return dispatch({
+        type: COMPLETE_ALL,
     });
 };

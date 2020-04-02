@@ -1,25 +1,19 @@
 import React, { createContext, useReducer } from 'react';
-import { ADD } from './constants';
+import reducer from './reducer';
 
 const initialState = {
-    tasks: [],
+    tasks: [
+        {
+            id: '1',
+            task: 'Test',
+            isCompleted: false,
+        }
+    ],
 };
 
 const store = createContext(initialState);
 
 const { Provider } = store;
-
-const reducer = (state, { payload, type }) => {
-    switch (type) {
-        case ADD: {
-            return {
-                tasks: state.tasks.concat(payload)
-            }
-        }
-        default:
-            throw new Error();
-    }
-};
 
 const StateProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);

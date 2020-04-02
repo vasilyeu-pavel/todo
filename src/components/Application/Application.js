@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import { StateProvider } from '../../providers/store/store';
 
-import Form from '../Form';
 import Header from './Header';
 import Body from './Body';
 
@@ -24,12 +23,8 @@ const Application = () => {
     return (
         <StateProvider>
             <StyledContainer>
-                <Header>
-                    <Form />
-                </Header>
-                <Body>
-                    body
-                </Body>
+                <Header />
+                <Body />
             </StyledContainer>
         </StateProvider>
     );
