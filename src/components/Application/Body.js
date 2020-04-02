@@ -1,18 +1,12 @@
-import styled from "styled-components";
-import React from "react";
+import React from 'react';
+import styled from 'styled-components';
 
-const Body = ({ className, children }) => {
-    const cn = `p-3 ${className}`;
+const Body = ({ className, children }) => (
+    <div className="row">
+        <div className={`p-3 ${className}`}>{children}</div>
+    </div>
+);
 
-    return (
-        <div className="row">
-            <div className={cn}>{children}</div>
-        </div>
-    );
-};
-
-const StyledBody = styled(Body)`
-  
-`;
+const StyledBody = styled(Body)``;
 
 export default StyledBody;
