@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const defaultValidation = {
   cb: () => true,
@@ -16,35 +16,36 @@ export const useForm = (callback = defaultCb, validateCb = defaultValidation, de
     const [values, setValues] = useState(defaultValues);
     const [errors, setErrors] = useState({});
 
-    const [isSubmitting, setIsSubmitting] = useState(false);
-
     const validate = (values) => {
-        const errors = {};
+        const err = {};
 
         for (const key in values) {
             if (!validateCb.cb(values[key])) {
-                errors[key] = validateCb.message || '';
+                err[key] = validateCb.message || '';
             }
         }
 
-        return errors
+        return {
+            err,
+            isValid: !!Object.keys(err).length,
+        }
     };
 
-    const resetForm = () => setValues({});
-
-    useEffect(() => {
-        if (Object.keys(errors).length === 0 && isSubmitting) {
-
-            callback()
-                .then(resetForm);
-        }
-    }, [errors]);
+    const resetForm = () => {
+        setValues(defaultValues);
+        setErrors({});
+    };
 
     const handleSubmit = (event) => {
         if (event) event.preventDefault();
 
-        setErrors(validate(values));
-        setIsSubmitting(true);
+        const { isValid, err } = validate(values);
+
+        if (!isValid) {
+            callback(values).then(resetForm);
+        } else {
+            setErrors(err);
+        }
     };
 
     const handleChange = ({ name, value, event }) => {
