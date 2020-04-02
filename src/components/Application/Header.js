@@ -1,9 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { IoIosArrowDown } from 'react-icons/io';
+
+const ChecksAllButton = ({ className, children }) => (
+    <span className={className}>
+        {children}
+    </span>
+);
+
+const StyledButton = styled(ChecksAllButton)`
+  font-size: 22px;
+`;
+
 const Header = ({ className, children }) => (
     <div className={`row p-3  ${className}`}>
-        <div className="col-1">123</div>
+        <div className="col-1">
+            <StyledButton>
+                <IoIosArrowDown />
+            </StyledButton>
+        </div>
         <div className="col-11">{children}</div>
     </div>
 );

@@ -7,7 +7,7 @@ import Header from './Header';
 import Body from './Body';
 
 const Container = ({ className, children }) => (
-    <div className={`container w-50 h-100 mt-5 ${className}`}>
+    <div className={`container w-50 mt-5 ${className}`}>
         {children}
     </div>
 );
