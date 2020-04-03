@@ -1,4 +1,4 @@
-import {ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE} from './constants';
+import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE, SORT_DND } from './constants';
 
 const reducer = (state, { payload, type }) => {
     switch (type) {
@@ -22,7 +22,13 @@ const reducer = (state, { payload, type }) => {
             const { id } = payload;
 
             return {
-                tasks: tasks.filter((task) => task.id !== id),
+                tasks: tasks
+                    .filter((task) => task.id !== id)
+                    // for dnd
+                    .map((task, i) => ({
+                        ...task,
+                        index: i,
+                    })),
             }
         }
         case HANDLE_COMPLETE: {
@@ -59,6 +65,13 @@ const reducer = (state, { payload, type }) => {
                     return task;
                 }),
             }
+        }
+        case SORT_DND: {
+            const { tasks } = payload;
+
+            return {
+                tasks,
+            };
         }
         default:
             throw new Error();
