@@ -12,6 +12,12 @@ import { completeAll } from '../../providers/store/actions';
 const Header = ({ className }) => {
     const [, actions] = useConnect({ completeAll });
 
+    const createTaskCb = onSubmit => (event, values) => {
+        onSubmit({ ...values });
+
+        event.target.querySelector('input').blur();
+    };
+
     return (
         <div className={`row p-3  ${className}`}>
             <div className="col-1">
@@ -19,8 +25,8 @@ const Header = ({ className }) => {
                     {() => <IoIosArrowDown />}
                 </ActionButton>
             </div>
-            <div className="col-11">
-                <Form />
+            <div className="col-10 pl-4 d-flex align-items-center">
+                <Form mode="create" createTaskCb={createTaskCb} />
             </div>
         </div>
     );

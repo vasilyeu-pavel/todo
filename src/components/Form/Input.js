@@ -5,9 +5,10 @@ const Input = ({ className, handleChange, name, value = '' }) => {
     return (
         <div>
             <input
+                autoFocus
                 onChange={({ target: { value } }) => handleChange({ value, name })}
                 name={name}
-                className={`${className} p-2`}
+                className={className}
                 placeholder="Enter task"
                 value={value}
             />
