@@ -1,4 +1,4 @@
-import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE } from './constants';
+import {ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE} from './constants';
 
 const reducer = (state, { payload, type }) => {
     switch (type) {
@@ -35,6 +35,24 @@ const reducer = (state, { payload, type }) => {
                         return {
                             ...task,
                             isCompleted: !task.isCompleted,
+                        };
+                    }
+
+                    return task;
+                }),
+            }
+        }
+
+        case UPDATE: {
+            const { tasks } = state;
+            const { id, task: taskText } = payload;
+
+            return {
+                tasks: tasks.map((task) => {
+                    if (task.id === id) {
+                        return {
+                            ...task,
+                            task: taskText,
                         };
                     }
 

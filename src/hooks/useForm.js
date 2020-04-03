@@ -8,8 +8,6 @@ const defaultValidation = {
 const defaultCb = (value) => {
     console.log('onSubmit');
     console.log(value);
-
-    return Promise.resolve();
 };
 
 export const useForm = (callback = defaultCb, validateCb = defaultValidation, defaultValues = {}) => {
@@ -42,7 +40,9 @@ export const useForm = (callback = defaultCb, validateCb = defaultValidation, de
         const { isValid, err } = validate(values);
 
         if (!isValid) {
-            callback(values).then(resetForm);
+            callback(event, values);
+
+            resetForm();
         } else {
             setErrors(err);
         }
@@ -53,7 +53,7 @@ export const useForm = (callback = defaultCb, validateCb = defaultValidation, de
             event.persist();
         }
 
-        console.log(`>>> handleChange ${name} "${value}"`);
+        // console.log(`>>> handleChange ${name} "${value}"`);
 
         setValues(values => ({ ...values, [name]: value }));
     };
