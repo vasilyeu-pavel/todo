@@ -1,11 +1,15 @@
 import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE } from './constants';
 
-import { withAllFields } from '../../mixins';
+import { withAllFields, withIndex } from '../../mixins';
 
-export const addTask = ({ dispatch }, values) => {
+export const addTask = ({ dispatch, getState }, values) => {
+    const { tasks } = getState();
+
+    const index = tasks.length;
+
     return dispatch({
         type: ADD,
-        payload: withAllFields(values),
+        payload: withIndex(withAllFields(values), index),
     });
 };
 

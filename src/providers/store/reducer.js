@@ -4,7 +4,7 @@ const reducer = (state, { payload, type }) => {
     switch (type) {
         case ADD: {
             return {
-                tasks: state.tasks.concat(payload)
+                tasks: state.tasks.concat(payload),
             }
         }
         case COMPLETE_ALL: {
