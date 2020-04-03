@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Form from '../Form';
+import { StateProvider } from '../../providers/store/store';
 
 import Header from './Header';
 import Body from './Body';
@@ -21,14 +21,12 @@ const StyledContainer = styled(Container)`
 
 const Application = () => {
     return (
-        <StyledContainer>
-            <Header>
-                <Form />
-            </Header>
-            <Body>
-                body
-            </Body>
-        </StyledContainer>
+        <StateProvider>
+            <StyledContainer>
+                <Header />
+                <Body />
+            </StyledContainer>
+        </StateProvider>
     );
 };
 
