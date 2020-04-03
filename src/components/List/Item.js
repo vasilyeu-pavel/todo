@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from 'styled-components';
 import {
     IoIosRadioButtonOff,
     IoIosArrowDropdown,
@@ -9,7 +10,7 @@ import { Form } from '../Form';
 import { Task } from '../Task';
 import { ActionButton } from '../Buttons';
 
-const Item = ({ id, task, isCompleted, handleComplete, removeTask }) => {
+const Item = ({ className, id, task, isCompleted, handleComplete, removeTask }) => {
     const [isEditMode, handleEdit] = useState(false);
 
     const handleCompleted = () => handleComplete(id);
@@ -23,7 +24,7 @@ const Item = ({ id, task, isCompleted, handleComplete, removeTask }) => {
 
     return (
         <div
-            className="row p-3"
+            className={`${className} row p-3`}
             onDoubleClick={() => handleEdit(!isEditMode)}
         >
             {/* completed bar */}
@@ -60,4 +61,6 @@ const Item = ({ id, task, isCompleted, handleComplete, removeTask }) => {
     )
 };
 
-export default Item;
+export default styled(Item)`
+    border-bottom: 1px solid #ededed;
+`;

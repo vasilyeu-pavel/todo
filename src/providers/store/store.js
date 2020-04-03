@@ -5,9 +5,16 @@ const initialState = {
     tasks: [
         {
             id: '1',
-            task: 'Test',
+            index: 0,
+            task: 'Test1',
             isCompleted: false,
-        }
+        },
+        {
+            id: '2',
+            index: 1,
+            task: 'Test2',
+            isCompleted: false,
+        },
     ],
 };
 

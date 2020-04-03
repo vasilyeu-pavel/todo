@@ -7,7 +7,7 @@ import Header from './Header';
 import Body from './Body';
 
 const Container = ({ className, children }) => (
-    <div className={`container w-50 mt-5 ${className}`}>
+    <div className={`container mt-0 mt-xl-5 ${className}`}>
         {children}
     </div>
 );
@@ -17,6 +17,13 @@ const StyledContainer = styled(Container)`
   font-size: 16px;
   font-family: inherit;
   font-weight: inherit;
+  width: 100%;
+  height: 100%;
+  
+  @media (min-width: 640px){
+    width: 50% !important;
+    height: auto;
+  }
 `;
 
 const Application = () => {

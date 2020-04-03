@@ -8,4 +8,6 @@ export const withCompleted = obj => ({
     isCompleted: false,
 });
 
+export const withIndex = (obj, index) => ({ ...obj, index });
+
 export const withAllFields = (obj) => withId(withCompleted(obj));
