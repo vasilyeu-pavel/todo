@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
 import reducer from './reducer';
 
 const initialState = {
@@ -21,9 +21,20 @@ const initialState = {
 const store = createContext(initialState);
 
 const { Provider } = store;
+const storageKey = 'store';
 
 const StateProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, initialState);
+    const [state, dispatch] = useReducer(reducer, initialState, (defaultState) => {
+        const persisted = JSON.parse(localStorage.getItem(storageKey) || 'null');
+
+        return persisted !== null
+            ? persisted
+            : defaultState;
+    });
+
+    useEffect(() => {
+        localStorage.setItem(storageKey, JSON.stringify(state))
+    }, [state]);
 
     const getState = () => state;
 
