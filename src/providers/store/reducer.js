@@ -1,6 +1,4 @@
-import { ADD, COMPLETE_ALL } from './constants';
-
-// todo update
+import { ADD, COMPLETE_ALL, HANDLE_COMPLETE } from './constants';
 
 const reducer = (state, { payload, type }) => {
     switch (type) {
@@ -17,6 +15,23 @@ const reducer = (state, { payload, type }) => {
                     ...task,
                     isCompleted: true,
                 })),
+            }
+        }
+        case HANDLE_COMPLETE: {
+            const { tasks } = state;
+            const { id } = payload;
+
+            return {
+                tasks: tasks.map((task) => {
+                    if (task.id === id) {
+                        return {
+                            ...task,
+                            isCompleted: !task.isCompleted,
+                        };
+                    }
+
+                    return task;
+                }),
             }
         }
         default:

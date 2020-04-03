@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+
+import { store } from '../../providers/store/store';
+import { handleComplete } from '../../providers/store/actions';
 
 import {
     IoIosRadioButtonOff,
@@ -8,29 +11,23 @@ import {
 import { Task } from '../Task';
 import { CompleteButton } from '../Buttons';
 
-// todo update
-
 const Item = ({ id, task, isCompleted }) => {
-    const [completed, setCompleted] = useState(isCompleted);
+    const { dispatcher } = useContext(store);
 
-    useEffect(() => {
-        setCompleted(isCompleted)
-    }, [isCompleted]);
+    const actions = dispatcher({ handleComplete });
 
-    const handleCompleted = () => setCompleted(!completed);
+    const handleCompleted = () => actions.handleComplete(id);
 
     return (
         <div className="row p-3">
             <div className="col-1">
-                <CompleteButton
-                    handleClick={handleCompleted}
-                    completed={completed}
-                >{() => !completed
-                    ? <IoIosRadioButtonOff />
-                    : <IoIosArrowDropdown />
+                <CompleteButton handleClick={handleCompleted}>{
+                    () => !isCompleted
+                        ? <IoIosRadioButtonOff />
+                        : <IoIosArrowDropdown />
                 }</CompleteButton>
             </div>
-            <Task completed={completed}>
+            <Task isCompleted={isCompleted}>
                 <span>
                     {task}
                 </span>

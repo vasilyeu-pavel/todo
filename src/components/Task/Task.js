@@ -10,7 +10,7 @@ const Task = ({ className, children }) => {
 };
 
 const StyledTask = styled(Task)`
-     text-decoration: ${({ completed }) => completed ? 'line-through' : 'none'};
+     text-decoration: ${({ isCompleted }) => isCompleted ? 'line-through' : 'none'};
 `;
 
 export default StyledTask;

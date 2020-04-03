@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CompleteButton = ({ className, completed, handleClick, children }) => (
+const CompleteButton = ({ className, handleClick, children }) => (
     <span onClick={handleClick} className={className}>
         {children()}
     </span>

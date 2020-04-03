@@ -6,4 +6,4 @@ export const UPDATE = 'UPDATE';
 
 export const COMPLETE_ALL = 'COMPLETE_ALL';
 
-// todo update
+export const HANDLE_COMPLETE = 'HANDLE_COMPLETE';
