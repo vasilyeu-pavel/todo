@@ -15,7 +15,8 @@ const StyledTask = styled(Task)`
 
 export default memo(
     StyledTask,
-    (prevProps, nextProp) => {
-        return prevProps.task === nextProp.task &&
-            prevProps.isCompleted === nextProp.isCompleted;
-})
+    (prevProps, nextProp) => (
+        prevProps.task === nextProp.task &&
+        prevProps.isCompleted === nextProp.isCompleted
+    )
+)

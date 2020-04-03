@@ -1,17 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
+
+import useConnect from '../../hooks/useConnect';
 
 import { ActionButton } from '../Buttons';
 import { Form } from '../Form';
 import { IoIosArrowDown } from 'react-icons/io';
 
 import { completeAll } from '../../providers/store/actions';
-import { store } from '../../providers/store/store';
 
 const Header = ({ className }) => {
-    const { dispatcher } = useContext(store);
-
-    const actions = dispatcher({ completeAll });
+    const [, actions] = useConnect({ completeAll });
 
     return (
         <div className={`row p-3  ${className}`}>

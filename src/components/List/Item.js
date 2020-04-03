@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import useConnect from '../../hooks/useConnect';
 
-import { store } from '../../providers/store/store';
 import { handleComplete, removeTask } from '../../providers/store/actions';
 
 import {
@@ -13,8 +13,7 @@ import { Task } from '../Task';
 import { ActionButton } from '../Buttons';
 
 const Item = ({ id, task, isCompleted }) => {
-    const { dispatcher } = useContext(store);
-    const actions = dispatcher({ handleComplete, removeTask });
+    const [, actions] = useConnect({ handleComplete, removeTask });
 
     const handleCompleted = () => actions.handleComplete(id);
     const handleRemove = () => actions.removeTask(id);

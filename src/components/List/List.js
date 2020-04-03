@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
-import { store } from '../../providers/store/store.js';
+import React from 'react';
+
+import useConnect from '../../hooks/useConnect';
 
 import Item from './Item';
 
 const List = () => {
-    const { state: { tasks } } = useContext(store);
+    const [{ tasks }] = useConnect();
 
     return tasks.map(task => <Item key={task.id} {...task} />);
 };

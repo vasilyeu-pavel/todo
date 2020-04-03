@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { store } from '../../providers/store/store.js';
+import useConnect from '../../hooks/useConnect';
 import { addTask } from '../../providers/store/actions.js';
 
 import { useForm } from '../../hooks/useForm';
@@ -9,11 +9,8 @@ import Input from './Input';
 
 const isRequired = val => !!(val && val.length);
 
-const Form = () => {
-    const name = 'task';
-
-    const { dispatcher } = useContext(store);
-    const actions = dispatcher({ addTask });
+const Form = ({ name = 'task' }) => {
+    const [, actions] = useConnect({ addTask });
 
     const { handleSubmit, values, handleChange } = useForm(
         actions.addTask,
