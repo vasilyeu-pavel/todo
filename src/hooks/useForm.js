@@ -53,7 +53,7 @@ export const useForm = (callback = defaultCb, validateCb = defaultValidation, de
             event.persist();
         }
 
-        console.group(`>>> handleChange ${name} "${value}"`);
+        console.log(`>>> handleChange ${name} "${value}"`);
 
         setValues(values => ({ ...values, [name]: value }));
     };

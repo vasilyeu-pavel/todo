@@ -1,4 +1,4 @@
-import { ADD, COMPLETE_ALL, HANDLE_COMPLETE } from './constants';
+import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE } from './constants';
 
 const reducer = (state, { payload, type }) => {
     switch (type) {
@@ -15,6 +15,14 @@ const reducer = (state, { payload, type }) => {
                     ...task,
                     isCompleted: true,
                 })),
+            }
+        }
+        case REMOVE: {
+            const { tasks } = state;
+            const { id } = payload;
+
+            return {
+                tasks: tasks.filter((task) => task.id !== id),
             }
         }
         case HANDLE_COMPLETE: {

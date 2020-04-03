@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const CompleteButton = ({ className, handleClick, children }) => (
+const ActionButton = ({ className, handleClick, children }) => (
     <span onClick={handleClick} className={className}>
         {children()}
     </span>
 );
 
-const StyledButton = styled(CompleteButton)`
+const StyledButton = styled(ActionButton)`
     font-size: 22px;
    
     &:hover {

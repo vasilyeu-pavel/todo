@@ -1,5 +1,5 @@
-import CompleteButton from './CompleteButton';
+import ActionButton from './ActionButton';
 
 export {
-    CompleteButton,
+    ActionButton,
 }

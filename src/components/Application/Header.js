@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 
-import { CompleteButton } from '../Buttons';
+import { ActionButton } from '../Buttons';
 import { Form } from '../Form';
 import { IoIosArrowDown } from 'react-icons/io';
 
@@ -16,9 +16,9 @@ const Header = ({ className }) => {
     return (
         <div className={`row p-3  ${className}`}>
             <div className="col-1">
-                <CompleteButton handleClick={actions.completeAll}>
+                <ActionButton handleClick={actions.completeAll}>
                     {() => <IoIosArrowDown />}
-                </CompleteButton>
+                </ActionButton>
             </div>
             <div className="col-11">
                 <Form />

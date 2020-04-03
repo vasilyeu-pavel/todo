@@ -1,4 +1,4 @@
-import { ADD, COMPLETE_ALL, HANDLE_COMPLETE } from './constants';
+import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE } from './constants';
 
 import { withAllFields } from '../../mixins';
 
@@ -18,6 +18,13 @@ export const completeAll = async ({ dispatch }) => {
 export const handleComplete = async ({ dispatch }, id) => {
     return dispatch({
         type: HANDLE_COMPLETE,
+        payload: { id }
+    });
+};
+
+export const removeTask = async ({ dispatch }, id) => {
+    return dispatch({
+        type: REMOVE,
         payload: { id }
     });
 };
