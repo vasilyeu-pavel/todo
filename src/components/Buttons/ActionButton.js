@@ -8,7 +8,7 @@ const ActionButton = ({ className, handleClick, children }) => (
 );
 
 const StyledButton = styled(ActionButton)`
-    font-size: 22px;
+    font-size: 30px;
    
     &:hover {
         cursor: pointer; 
