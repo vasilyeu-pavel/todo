@@ -10,7 +10,7 @@ const DraggableContainer = ({ children, connectDropTarget, connectDragSource }) 
             connectDropTarget(findDOMNode(ref.current));
             connectDragSource(findDOMNode(ref.current));
         }
-    }, []);
+    }, [connectDropTarget, connectDragSource]);
 
 
     return (
