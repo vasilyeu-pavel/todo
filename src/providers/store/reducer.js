@@ -1,4 +1,4 @@
-import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE, SORT_DND, SIGN_IN } from '../../constants';
+import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE, SORT_DND, SIGN_IN, SET, LOADING } from '../../constants';
 
 const reducer = (state, { payload, type }) => {
     switch (type) {
@@ -7,6 +7,19 @@ const reducer = (state, { payload, type }) => {
                 ...state,
                 user: payload,
             };
+        }
+        case SET: {
+            return {
+                ...state,
+                loading: false,
+                tasks: payload,
+            }
+        }
+        case LOADING: {
+            return {
+                ...state,
+                loading: true,
+            }
         }
         case ADD: {
             return {
@@ -27,12 +40,12 @@ const reducer = (state, { payload, type }) => {
         }
         case REMOVE: {
             const { tasks } = state;
-            const { id } = payload;
+            const { uid } = payload;
 
             return {
                 ...state,
                 tasks: tasks
-                    .filter((task) => task.id !== id)
+                    .filter((task) => task.uid !== uid)
                     // for dnd
                     .map((task, i) => ({
                         ...task,
@@ -42,12 +55,12 @@ const reducer = (state, { payload, type }) => {
         }
         case HANDLE_COMPLETE: {
             const { tasks } = state;
-            const { id } = payload;
+            const { uid } = payload;
 
             return {
                 ...state,
                 tasks: tasks.map((task) => {
-                    if (task.id === id) {
+                    if (task.uid === uid) {
                         return {
                             ...task,
                             isCompleted: !task.isCompleted,
@@ -61,12 +74,12 @@ const reducer = (state, { payload, type }) => {
 
         case UPDATE: {
             const { tasks } = state;
-            const { id, description } = payload;
+            const { uid, description } = payload;
 
             return {
                 ...state,
                 tasks: tasks.map((task) => {
-                    if (task.id === id) {
+                    if (task.uid === uid) {
                         return {
                             ...task,
                             description,

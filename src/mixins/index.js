@@ -1,8 +1,3 @@
-export const withId = obj => ({
-    ...obj,
-    id: Date.now(),
-});
-
 export const withCompleted = obj => ({
     ...obj,
     isCompleted: false,
@@ -10,4 +5,4 @@ export const withCompleted = obj => ({
 
 export const withIndex = (obj, index) => ({ ...obj, index });
 
-export const withAllFields = (obj) => withId(withCompleted(obj));
+export const withAllFields = (obj) => withCompleted(obj);

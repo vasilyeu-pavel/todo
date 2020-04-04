@@ -1,12 +1,7 @@
-import * as firebase from 'firebase';
-
 import { SIGN_IN } from '../../constants';
-import config from '../../config';
 
-export const isSignIn = ({ dispatch, history }) => {
-    const user = window.sessionStorage.getItem(
-        `firebase:authUser:${config.apiKey}:[DEFAULT]`
-    );
+export const isSignIn = ({ dispatch, history, firebase }) => {
+    const user = firebase.isAuth();
 
     if (user) {
         return dispatch({
@@ -18,27 +13,18 @@ export const isSignIn = ({ dispatch, history }) => {
     }
 };
 
-export const signIn = ({ dispatch, history }) => {
-    const provider = new firebase.auth.GoogleAuthProvider();
+export const signIn = ({ dispatch, history, firebase }) => {
+    firebase.auth()
+        .then(result => {
+            history.push('/');
 
-    firebase
-        .auth()
-        .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-        .then(() => {
-            firebase
-                .auth()
-                .signInWithPopup(provider)
-                .then(result => {
-                    history.push('/');
-
-                    return dispatch({
-                        type: SIGN_IN,
-                        payload: result.user,
-                    });
-                })
-                .catch(e => {
-                    console.log(e);
-                    history.push('/auth');
-                })
+            return dispatch({
+                type: SIGN_IN,
+                payload: result.user,
+            });
+        })
+        .catch(e => {
+            console.log(e);
+            history.push('/auth');
         })
 };

@@ -21,15 +21,15 @@ const DraggableContainer = ({ children, connectDropTarget, connectDragSource }) 
 };
 
 const specTarget = {
-    drop: ({ id, handleDrop }, monitor) => {
+    drop: ({ uid, handleDrop }, monitor) => {
         handleDrop(
             {
                 // drag
-                id: monitor.getItem().id,
+                uid: monitor.getItem().uid,
             },
             {
                 // drop
-                id
+                uid
             });
     },
 
@@ -45,7 +45,7 @@ const collectTarget = (connect, monitor) => {
 };
 
 const specSource = {
-    beginDrag: ({ id }) => ({ id }),
+    beginDrag: ({ uid }) => ({ uid }),
 };
 
 const collectSource = (connect, monitor) => ({
