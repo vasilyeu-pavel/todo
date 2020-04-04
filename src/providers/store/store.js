@@ -1,7 +1,10 @@
 import React, { createContext, useReducer, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
+
 import reducer from './reducer';
 
 const initialState = {
+    user: {},
     tasks: [
         {
             id: '1',
@@ -24,6 +27,7 @@ const { Provider } = store;
 const storageKey = 'store';
 
 const StateProvider = ({ children }) => {
+    const history = useHistory();
     const [state, dispatch] = useReducer(reducer, initialState, (defaultState) => {
         const persisted = JSON.parse(localStorage.getItem(storageKey) || 'null');
 
@@ -42,7 +46,7 @@ const StateProvider = ({ children }) => {
         const functions = {};
 
         for (const cbName in callbacks) {
-            functions[cbName] = callbacks[cbName].bind(null, { dispatch, getState });
+            functions[cbName] = callbacks[cbName].bind(null, { dispatch, getState, history });
         }
 
         return functions;

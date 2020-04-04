@@ -7,7 +7,7 @@ import { ActionButton } from '../Buttons';
 import { Form } from '../Form';
 import { IoIosArrowDown } from 'react-icons/io';
 
-import { completeAll } from '../../providers/store/actions';
+import { completeAll } from '../../actions/tasks';
 
 const ContentHeader = ({ className }) => {
     const [, actions] = useConnect({ completeAll });

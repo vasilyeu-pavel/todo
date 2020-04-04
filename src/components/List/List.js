@@ -8,14 +8,14 @@ import { DraggableContainer } from '../../containers'
 
 import Item from './Item';
 
-import { handleComplete, removeTask, sortByDnD } from '../../providers/store/actions';
+import { handleComplete, removeTask, sortByDnD } from '../../actions/tasks';
 
 const sortByIndex = (a, b) => a.index - b.index;
 
 const List = () => {
-    const [{ tasks }, actions] = useConnect({ handleComplete, removeTask, sortByDnD });
+    const [{ tasks, ...props }, actions] = useConnect({ handleComplete, removeTask, sortByDnD });
 
-    console.log(tasks);
+    console.log(tasks, props);
 
     return (
         <DndProvider backend={HTML5Backend}>
