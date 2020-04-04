@@ -10,14 +10,14 @@ import { Form } from '../Form';
 import { Task } from '../Task';
 import { ActionButton } from '../Buttons';
 
-const Item = ({ className, id, description, isCompleted, handleComplete, removeTask }) => {
+const Item = ({ className, uid, description, isCompleted, handleComplete, removeTask }) => {
     const [isEditMode, handleEdit] = useState(false);
 
-    const handleCompleted = () => handleComplete(id);
-    const handleRemove = () => removeTask(id);
+    const handleCompleted = () => handleComplete(uid);
+    const handleRemove = () => removeTask(uid);
 
     const updateTaskCb = onSubmit => (e, values) => {
-        onSubmit({ ...values, id });
+        onSubmit({ ...values, uid });
 
         handleEdit(false);
     };
@@ -43,7 +43,7 @@ const Item = ({ className, id, description, isCompleted, handleComplete, removeT
                         <Form
                             mode="update"
                             updateTaskCb={updateTaskCb}
-                            taskId={id}
+                            taskId={uid}
                         />
                     </div>
                 )

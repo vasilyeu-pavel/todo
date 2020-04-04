@@ -23,7 +23,7 @@ const Form = (
     }) => {
     const [{ tasks }, actions] = useConnect({ addTask, updateTask });
 
-    const foundTask = tasks.find(({ id }) => id === taskId);
+    const foundTask = tasks.find(({ uid }) => uid === taskId);
 
     const { handleSubmit, values, handleChange } = useForm(
         mode === 'create'

@@ -8,14 +8,18 @@ import { DraggableContainer } from '../../containers'
 
 import Item from './Item';
 
-import { handleComplete, removeTask, sortByDnD } from '../../actions/tasks';
+import { handleComplete, removeTask, sortByDnD, getAllTask, setLoading } from '../../actions/tasks';
 
 const sortByIndex = (a, b) => a.index - b.index;
 
 const List = () => {
-    const [{ tasks, ...props }, actions] = useConnect({ handleComplete, removeTask, sortByDnD });
-
-    console.log(tasks, props);
+    const [{ tasks }, actions] = useConnect({
+        handleComplete,
+        removeTask,
+        sortByDnD,
+        getAllTask,
+        setLoading
+    });
 
     return (
         <DndProvider backend={HTML5Backend}>
@@ -23,8 +27,8 @@ const List = () => {
                 .sort(sortByIndex)
                 .map(task =>
                     <DraggableContainer
-                        key={task.id}
-                        id={task.id}
+                        key={task.uid}
+                        uid={task.uid}
                         handleDrop={actions.sortByDnD}
                     >
                         <Item {...task} {...actions} />
