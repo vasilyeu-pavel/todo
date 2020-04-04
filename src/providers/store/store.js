@@ -1,11 +1,14 @@
 import React, { createContext, useReducer, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { HANDLE_CONNECTION } from '../../constants';
+
 import Firebase from '../../utils/Firebase';
 
 import reducer from './reducer';
 
 const initialState = {
     loading: false,
+    isConnected: true,
     user: {},
     tasks: [
         // {
@@ -32,25 +35,31 @@ const firebase = new Firebase();
 
 const StateProvider = ({ children }) => {
     const history = useHistory();
-    const [state, dispatch] = useReducer(reducer, initialState,
-        // (defaultState) => {
-        //     const persisted = JSON.parse(localStorage.getItem(storageKey) || 'null');
-        //
-        //     return persisted !== null
-        //         ? persisted
-        //         : defaultState;
-        // }
-    );
+    const [state, dispatch] = useReducer(reducer, initialState);
 
-    // useEffect(() => {
-    //     localStorage.setItem(storageKey, JSON.stringify(state))
-    // }, [state]);
+    const handleConnection = (status) => {
+        dispatch({
+           type: HANDLE_CONNECTION,
+           payload: { status }
+        });
+    };
+
+    useEffect(() => {
+        firebase.checkConnection(handleConnection);
+    }, []);
+
+    // сохраняем состояние в локал сторадже
+    useEffect(() => {
+        localStorage.setItem(storageKey, JSON.stringify(state))
+    }, [state]);
 
     const getState = () => state;
 
+    // dispatcher - функция которая привязывает dispatch к экшенам
     const dispatcher = (callbacks = {}) => {
         const functions = {};
 
+        // пробрасываем в экшены, для вынесения всей бизнес логики в экшен крейторы
         for (const cbName in callbacks) {
             functions[cbName] = callbacks[cbName].bind(null, {
                 dispatch,

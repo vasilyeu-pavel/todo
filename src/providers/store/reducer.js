@@ -1,4 +1,15 @@
-import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE, SORT_DND, SIGN_IN, SET, LOADING } from '../../constants';
+import {
+    ADD,
+    COMPLETE_ALL,
+    HANDLE_COMPLETE,
+    REMOVE,
+    UPDATE,
+    SORT_DND,
+    SIGN_IN,
+    SET,
+    LOADING,
+    HANDLE_CONNECTION
+} from '../../constants';
 
 const reducer = (state, { payload, type }) => {
     switch (type) {
@@ -97,6 +108,14 @@ const reducer = (state, { payload, type }) => {
                 ...state,
                 tasks: tasks
                     .map((task, index) => ({ ...task, index })),
+            };
+        }
+        case HANDLE_CONNECTION: {
+            const { status } = payload;
+
+            return {
+                ...state,
+                isConnected: status,
             };
         }
         default:

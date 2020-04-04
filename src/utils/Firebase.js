@@ -19,6 +19,19 @@ class Firebase {
         return parsedUser;
     }
 
+    checkConnection(callBack = () => true) {
+        const connectedRef = firebase.database().ref('.info/connected');
+        connectedRef.on('value', (snap) => {
+            if (snap.val() === true) {
+                console.log('connected');
+                callBack(true);
+            } else {
+                console.log('disconnect');
+                callBack(false);
+            }
+        });
+    }
+
     getAll() {
         return firebase
             .database()
