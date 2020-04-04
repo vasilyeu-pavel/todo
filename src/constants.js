@@ -9,3 +9,5 @@ export const COMPLETE_ALL = 'COMPLETE_ALL';
 export const HANDLE_COMPLETE = 'HANDLE_COMPLETE';
 
 export const SORT_DND = 'SORT_DND';
+
+export const SIGN_IN = 'SIGN_IN';

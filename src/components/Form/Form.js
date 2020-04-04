@@ -5,7 +5,7 @@ import useConnect from '../../hooks/useConnect';
 import { useForm } from '../../hooks/useForm';
 
 // actions
-import { addTask, updateTask } from '../../providers/store/actions.js';
+import { addTask, updateTask } from '../../actions/tasks';
 
 // components
 import Input from './Input';

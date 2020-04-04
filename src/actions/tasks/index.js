@@ -1,4 +1,4 @@
-import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE, SORT_DND } from './constants';
+import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE, SORT_DND } from '../../constants';
 import { withAllFields, withIndex } from '../../mixins';
 
 export const addTask = ({ dispatch, getState }, values) => {

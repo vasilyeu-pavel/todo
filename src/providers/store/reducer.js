@@ -1,9 +1,16 @@
-import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE, SORT_DND } from './constants';
+import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE, SORT_DND, SIGN_IN } from '../../constants';
 
 const reducer = (state, { payload, type }) => {
     switch (type) {
+        case SIGN_IN: {
+            return {
+                ...state,
+                user: payload,
+            };
+        }
         case ADD: {
             return {
+                ...state,
                 tasks: state.tasks.concat(payload),
             }
         }
@@ -11,6 +18,7 @@ const reducer = (state, { payload, type }) => {
             const { tasks } = state;
 
             return {
+                ...state,
                 tasks: tasks.map((task) => ({
                     ...task,
                     isCompleted: true,
@@ -22,6 +30,7 @@ const reducer = (state, { payload, type }) => {
             const { id } = payload;
 
             return {
+                ...state,
                 tasks: tasks
                     .filter((task) => task.id !== id)
                     // for dnd
@@ -36,6 +45,7 @@ const reducer = (state, { payload, type }) => {
             const { id } = payload;
 
             return {
+                ...state,
                 tasks: tasks.map((task) => {
                     if (task.id === id) {
                         return {
@@ -54,6 +64,7 @@ const reducer = (state, { payload, type }) => {
             const { id, description } = payload;
 
             return {
+                ...state,
                 tasks: tasks.map((task) => {
                     if (task.id === id) {
                         return {
@@ -70,6 +81,7 @@ const reducer = (state, { payload, type }) => {
             const { tasks } = payload;
 
             return {
+                ...state,
                 tasks: tasks
                     .map((task, index) => ({ ...task, index })),
             };

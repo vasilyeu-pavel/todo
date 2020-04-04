@@ -7,9 +7,9 @@ import { ActionButton } from '../Buttons';
 import { Form } from '../Form';
 import { IoIosArrowDown } from 'react-icons/io';
 
-import { completeAll } from '../../providers/store/actions';
+import { completeAll } from '../../actions/tasks';
 
-const Header = ({ className }) => {
+const ContentHeader = ({ className }) => {
     const [, actions] = useConnect({ completeAll });
 
     const createTaskCb = onSubmit => (event, values) => {
@@ -32,8 +32,8 @@ const Header = ({ className }) => {
     );
 };
 
-const StyledHeader = styled(Header)`
+const StyledContentHeader = styled(ContentHeader)`
   box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);
 `;
 
-export default StyledHeader;
+export default StyledContentHeader;
