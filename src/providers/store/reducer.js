@@ -51,14 +51,14 @@ const reducer = (state, { payload, type }) => {
 
         case UPDATE: {
             const { tasks } = state;
-            const { id, task: taskText } = payload;
+            const { id, description } = payload;
 
             return {
                 tasks: tasks.map((task) => {
                     if (task.id === id) {
                         return {
                             ...task,
-                            task: taskText,
+                            description,
                         };
                     }
 
@@ -70,7 +70,8 @@ const reducer = (state, { payload, type }) => {
             const { tasks } = payload;
 
             return {
-                tasks,
+                tasks: tasks
+                    .map((task, index) => ({ ...task, index })),
             };
         }
         default:

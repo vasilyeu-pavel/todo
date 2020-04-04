@@ -10,7 +10,7 @@ import { Form } from '../Form';
 import { Task } from '../Task';
 import { ActionButton } from '../Buttons';
 
-const Item = ({ className, id, task, isCompleted, handleComplete, removeTask }) => {
+const Item = ({ className, id, description, isCompleted, handleComplete, removeTask }) => {
     const [isEditMode, handleEdit] = useState(false);
 
     const handleCompleted = () => handleComplete(id);
@@ -48,7 +48,7 @@ const Item = ({ className, id, task, isCompleted, handleComplete, removeTask }) 
                     </div>
                 )
                 : (
-                    <Task task={task} isCompleted={isCompleted} />
+                    <Task description={description} isCompleted={isCompleted} />
             )}
 
             {/* remove bar */}

@@ -13,10 +13,10 @@ export const addTask = ({ dispatch, getState }, values) => {
     });
 };
 
-export const updateTask = ({ dispatch }, { id, task }) => {
+export const updateTask = ({ dispatch }, task) => {
     return dispatch({
         type: UPDATE,
-        payload: { id, task },
+        payload: task,
     });
 };
 
@@ -60,7 +60,7 @@ export const sortByDnD = ({ dispatch, getState }, { id: dragItemId }, { id: drop
     return dispatch({
         type: SORT_DND,
         payload: {
-            tasks: copiedTasks.map((task, index) => ({ ...task, index })),
+            tasks: copiedTasks,
         }
     });
 };

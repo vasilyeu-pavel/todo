@@ -15,7 +15,7 @@ const isRequired = val => !!(val && val.length);
 
 const Form = (
     {
-        name = 'task',
+        name = 'description',
         mode = 'create',
         updateTaskCb,
         createTaskCb,
@@ -33,7 +33,7 @@ const Form = (
             cb: isRequired,
             message: 'isRequired'
         },
-        { [name]: foundTask ? foundTask.task : '' }
+        { [name]: foundTask ? foundTask.description : '' }
     );
 
     return (

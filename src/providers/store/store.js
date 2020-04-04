@@ -6,13 +6,13 @@ const initialState = {
         {
             id: '1',
             index: 0,
-            task: 'Test1',
+            description: 'Test1',
             isCompleted: false,
         },
         {
             id: '2',
             index: 1,
-            task: 'Test2',
+            description: 'Test2',
             isCompleted: false,
         },
     ],
