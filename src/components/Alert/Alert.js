@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import {
     IoIosClose,
 } from 'react-icons/io';
@@ -36,6 +38,10 @@ const Alert = ({ isConnected }) => {
             </span>
         </div>
     ) : null
+};
+
+Alert.propTypes = {
+    isConnected: PropTypes.bool.isRequired,
 };
 
 export default Alert;

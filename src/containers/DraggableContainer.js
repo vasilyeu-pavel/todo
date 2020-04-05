@@ -1,4 +1,6 @@
 import React, { useRef, useEffect } from 'react';
+import Proptypes from 'prop-types';
+
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 
@@ -18,6 +20,12 @@ const DraggableContainer = ({ children, connectDropTarget, connectDragSource }) 
             {children}
         </div>
     );
+};
+
+DraggableContainer.propTypes = {
+    children: Proptypes.object.isRequired,
+    connectDropTarget: Proptypes.func.isRequired,
+    connectDragSource: Proptypes.func.isRequired
 };
 
 const specTarget = {

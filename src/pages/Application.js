@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
 
 import ContentHeader from '../components/ContentHeader';
@@ -40,6 +42,10 @@ const Application = ({ className }) => {
             </div>
         </>
     );
+};
+
+Application.propTypes = {
+    className: PropTypes.string.isRequired,
 };
 
 const StyledApplication = styled(Application)`

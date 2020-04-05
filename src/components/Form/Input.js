@@ -1,4 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
 
 const Input = ({ className, handleChange, name, value = '' }) => {
@@ -14,6 +16,13 @@ const Input = ({ className, handleChange, name, value = '' }) => {
             />
         </div>
     )
+};
+
+Input.propTypes = {
+    className: PropTypes.string.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string.isRequired
 };
 
 const StyledInput = styled(Input)`
