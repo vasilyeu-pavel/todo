@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 import config from '../config';
 
 class Firebase {
@@ -39,6 +39,8 @@ class Firebase {
             .once('value')
             .then((snapshot) => {
                 const response = snapshot.val();
+
+                if (!response) return [];
 
                 return Object
                     .entries(response)
