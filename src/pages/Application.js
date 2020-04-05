@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
 
 import ContentHeader from '../components/ContentHeader';
 import { List } from '../components/List';
+import Alert from '../components/Alert/Alert';
 
 import useConnect from '../hooks/useConnect';
+import useConnection from '../hooks/useConnection';
+
 import { isSignIn } from '../actions/auth';
 import { setLoading, getAllTask } from '../actions/tasks';
 import Preloader from '../components/Preloader/Preloader';
 
 const Application = ({ className }) => {
-    const [{ user, loading }, actions] = useConnect({ isSignIn, setLoading, getAllTask });
+    const [{ user, loading, isConnected }, actions] = useConnect({ isSignIn, setLoading, getAllTask });
+    useConnection();
 
     useEffect(() => {
         actions.isSignIn();
@@ -26,13 +32,20 @@ const Application = ({ className }) => {
     if (loading) return <Preloader />;
 
     return (
-        <div className={`row pr-3 mt-0 mt-xl-5 ${className}`}>
-            <div className="col main-content p-0">
-                <ContentHeader />
-                <List />
+        <>
+            <Alert isConnected={isConnected} />
+            <div className={`row pr-3 mt-0 mt-xl-5 ${className}`}>
+                <div className="col main-content p-0">
+                    <ContentHeader />
+                    <List />
+                </div>
             </div>
-        </div>
+        </>
     );
+};
+
+Application.propTypes = {
+    className: PropTypes.string.isRequired,
 };
 
 const StyledApplication = styled(Application)`

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // custom hooks
 import useConnect from '../../hooks/useConnect';
@@ -15,7 +16,7 @@ const isRequired = val => !!(val && val.length);
 
 const Form = (
     {
-        name = 'description',
+        name,
         mode = 'create',
         updateTaskCb,
         createTaskCb,
@@ -37,7 +38,7 @@ const Form = (
     );
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="w-100" onSubmit={handleSubmit}>
             <Input
                 handleChange={handleChange}
                 name={name}
@@ -45,6 +46,19 @@ const Form = (
             />
         </form>
     );
+};
+
+Form.propTypes = {
+    name: PropTypes.string,
+    mode: PropTypes.string,
+    updateTaskCb: PropTypes.func,
+    createTaskCb: PropTypes.func,
+    taskId: PropTypes.string,
+};
+
+Form.defaultProps = {
+    name: 'description',
+    mode: 'create',
 };
 
 export default Form;

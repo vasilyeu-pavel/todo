@@ -1,4 +1,6 @@
 import React, { memo } from 'react';
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
 
 const Task = ({ className, description }) => (
@@ -8,6 +10,11 @@ const Task = ({ className, description }) => (
         </span>
     </div>
 );
+
+Task.propTypes = {
+    className: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+};
 
 const StyledTask = styled(Task)`
      text-decoration: ${({ isCompleted }) => isCompleted ? 'line-through' : 'none'};

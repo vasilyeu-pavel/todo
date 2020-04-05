@@ -4,5 +4,3 @@ export const withCompleted = obj => ({
 });
 
 export const withIndex = (obj, index) => ({ ...obj, index });
-
-export const withAllFields = (obj) => withCompleted(obj);

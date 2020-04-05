@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const GoogleSignIn = ({ handleClick }) => (
     <button
@@ -9,5 +10,9 @@ const GoogleSignIn = ({ handleClick }) => (
         SignIn Google
     </button>
 );
+
+GoogleSignIn.propTypes = {
+    handleClick: PropTypes.func.isRequired,
+};
 
 export default GoogleSignIn;

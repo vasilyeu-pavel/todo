@@ -1,4 +1,4 @@
-import * as firebase from 'firebase';
+import firebase from 'firebase/app';
 import config from '../config';
 
 class Firebase {
@@ -19,13 +19,28 @@ class Firebase {
         return parsedUser;
     }
 
+    checkConnection(cb = () => true) {
+        const connectedRef = this.firebase.database().ref('.info/connected');
+        connectedRef.on('value', (snap) => {
+            if (snap.val() === true) {
+                console.log('connected');
+                cb(true);
+            } else {
+                console.log('disconnect');
+                cb(false);
+            }
+        });
+    }
+
     getAll() {
-        return firebase
+        return this.firebase
             .database()
             .ref(`tasks-${this.user.uid}`)
             .once('value')
             .then((snapshot) => {
                 const response = snapshot.val();
+
+                if (!response) return [];
 
                 return Object
                     .entries(response)
@@ -39,11 +54,14 @@ class Firebase {
 
     delete(taskUid) {
         // returned promise
-        return firebase.database().ref(`tasks-${this.user.uid}/${taskUid}`).set(null);
+        return this.firebase
+            .database()
+            .ref(`tasks-${this.user.uid}/${taskUid}`)
+            .set(null);
     }
 
     update(taskUid, data) {
-        return firebase.database().ref(`tasks-${this.user.uid}/${taskUid}`).update(data);
+        return this.firebase.database().ref(`tasks-${this.user.uid}/${taskUid}`).update(data);
     }
 
     set(data) {

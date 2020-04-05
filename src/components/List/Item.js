@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
     IoIosRadioButtonOff,
@@ -59,6 +60,16 @@ const Item = ({ className, uid, description, isCompleted, handleComplete, remove
             </div>
         </div>
     )
+};
+
+
+Item.propTypes = {
+    className: PropTypes.string.isRequired,
+    uid: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    isCompleted: PropTypes.bool.isRequired,
+    handleComplete: PropTypes.func.isRequired,
+    removeTask: PropTypes.func.isRequired,
 };
 
 export default styled(Item)`
