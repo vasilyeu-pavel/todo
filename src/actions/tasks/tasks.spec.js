@@ -66,7 +66,7 @@ describe('<TASK ACTIONS>', () => {
             isConnected: true,
         });
 
-        const receivedValue = await updateTask.bind(null, {
+        await updateTask.bind(null, {
             dispatch: mockDispatch,
             firebase: mockFirebase,
             getState: mockGetState,
