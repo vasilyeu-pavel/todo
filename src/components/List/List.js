@@ -21,6 +21,7 @@ const List = () => {
         setLoading
     });
 
+    // todo Добавить кастомных хук для выбора днд бэкенда в зависимости от устройства
     return (
         <DndProvider backend={HTML5Backend}>
             {tasks

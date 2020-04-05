@@ -4,6 +4,7 @@ import Proptypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 
+// todo Добавить лайаут для драга
 const DraggableContainer = ({ children, connectDropTarget, connectDragSource }) => {
     const ref = useRef(null);
 
