@@ -6,6 +6,7 @@ import { List } from '../components/List';
 import Alert from '../components/Alert/Alert';
 
 import useConnect from '../hooks/useConnect';
+import useConnection from '../hooks/useConnection';
 
 import { isSignIn } from '../actions/auth';
 import { setLoading, getAllTask } from '../actions/tasks';
@@ -13,7 +14,7 @@ import Preloader from '../components/Preloader/Preloader';
 
 const Application = ({ className }) => {
     const [{ user, loading, isConnected }, actions] = useConnect({ isSignIn, setLoading, getAllTask });
-    // const { isOnline } = useConnection();
+    useConnection();
 
     useEffect(() => {
         actions.isSignIn();

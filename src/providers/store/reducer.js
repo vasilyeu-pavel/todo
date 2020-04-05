@@ -8,10 +8,31 @@ import {
     SIGN_IN,
     SET,
     LOADING,
-    HANDLE_CONNECTION
+    LOADED,
+    HANDLE_CONNECTION,
 } from '../../constants';
 
-const reducer = (state, { payload, type }) => {
+export const initialState = {
+    loading: false,
+    isConnected: true,
+    user: {},
+    tasks: [
+        // {
+        //     id: '1',
+        //     index: 0,
+        //     description: 'Test1',
+        //     isCompleted: false,
+        // },
+        // {
+        //     id: '2',
+        //     index: 1,
+        //     description: 'Test2',
+        //     isCompleted: false,
+        // },
+    ],
+};
+
+export const reducer = (state, { payload, type }) => {
     switch (type) {
         case SIGN_IN: {
             return {
@@ -30,6 +51,12 @@ const reducer = (state, { payload, type }) => {
             return {
                 ...state,
                 loading: true,
+            }
+        }
+        case LOADED: {
+            return {
+                ...state,
+                loading: false,
             }
         }
         case ADD: {

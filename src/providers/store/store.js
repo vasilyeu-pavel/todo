@@ -3,33 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { HANDLE_CONNECTION } from '../../constants';
 
 import Firebase from '../../utils/Firebase';
+import config from '../../config';
 
-import reducer from './reducer';
-
-const initialState = {
-    loading: false,
-    isConnected: true,
-    user: {},
-    tasks: [
-        // {
-        //     id: '1',
-        //     index: 0,
-        //     description: 'Test1',
-        //     isCompleted: false,
-        // },
-        // {
-        //     id: '2',
-        //     index: 1,
-        //     description: 'Test2',
-        //     isCompleted: false,
-        // },
-    ],
-};
+import { reducer,initialState } from './reducer';
 
 const store = createContext(initialState);
 
 const { Provider } = store;
-const storageKey = 'store';
 
 const firebase = new Firebase();
 
@@ -50,7 +30,7 @@ const StateProvider = ({ children }) => {
 
     // сохраняем состояние в локал сторадже
     useEffect(() => {
-        localStorage.setItem(storageKey, JSON.stringify(state))
+        localStorage.setItem(config.storageKey, JSON.stringify(state))
     }, [state]);
 
     const getState = () => state;

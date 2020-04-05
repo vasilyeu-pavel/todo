@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
-import Firebase from '../utils/Firebase';
+import { useEffect } from 'react';
+import useConnect from './useConnect';
+import { syncTasks, setLoading } from '../actions/tasks';
+
+// for skip first connection
+let i = 0;
 
 const useConnection = () => {
-    // const [isOnline, handleConnection] = useState(navigator.onLine);
-
-    // const updateConnectionStatus = () => {
-    //     console.log(`online connection: ${navigator.onLine}`);
-    //
-    //     handleConnection(navigator.onLine);
-    // };
+    const [{ isConnected }, actions] = useConnect({ syncTasks, setLoading });
 
     useEffect(() => {
-        // const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-        //
-        // connection.addEventListener('change', updateConnectionStatus);
-        //
-        // return () => connection.removeEventListener('change', updateConnectionStatus);
-    }, []);
+        if (!isConnected) i++;
 
-    return { isOnline };
+        if (isConnected && i > 1) {
+            actions.setLoading();
+
+            actions.syncTasks();
+        }
+    }, [isConnected]);
+
+    return null;
 };
 
 export default useConnection;

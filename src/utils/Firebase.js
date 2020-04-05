@@ -19,21 +19,21 @@ class Firebase {
         return parsedUser;
     }
 
-    checkConnection(callBack = () => true) {
-        const connectedRef = firebase.database().ref('.info/connected');
+    checkConnection(cb = () => true) {
+        const connectedRef = this.firebase.database().ref('.info/connected');
         connectedRef.on('value', (snap) => {
             if (snap.val() === true) {
                 console.log('connected');
-                callBack(true);
+                cb(true);
             } else {
                 console.log('disconnect');
-                callBack(false);
+                cb(false);
             }
         });
     }
 
     getAll() {
-        return firebase
+        return this.firebase
             .database()
             .ref(`tasks-${this.user.uid}`)
             .once('value')
@@ -52,11 +52,14 @@ class Firebase {
 
     delete(taskUid) {
         // returned promise
-        return firebase.database().ref(`tasks-${this.user.uid}/${taskUid}`).set(null);
+        return this.firebase
+            .database()
+            .ref(`tasks-${this.user.uid}/${taskUid}`)
+            .set(null);
     }
 
     update(taskUid, data) {
-        return firebase.database().ref(`tasks-${this.user.uid}/${taskUid}`).update(data);
+        return this.firebase.database().ref(`tasks-${this.user.uid}/${taskUid}`).update(data);
     }
 
     set(data) {

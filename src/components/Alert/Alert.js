@@ -3,30 +3,39 @@ import {
     IoIosClose,
 } from 'react-icons/io';
 
-
 const Alert = ({ isConnected }) => {
     const [isOpen, setOpen] = useState(!isConnected);
+    const [{ type, message }, setType] = useState({ type: 'danger', message: '' });
+
+    const className = `alert alert-${type} w-100 position-absolute text-center`;
 
     const handleOpen = () => setOpen(!isOpen);
 
     useEffect(() => {
-        setOpen(!isConnected);
+        if (!isConnected) {
+            setOpen(true);
+
+            setType({
+                type: 'danger',
+                message: 'Потеряно соединение, продолжайте работать, при востановлении, данные синхронизируются'
+            })
+        }
     }, [isConnected]);
 
-    return isOpen && (
+    return isOpen ? (
         <div
-            className="alert alert-danger w-100 position-absolute text-center"
+            className={className}
             role="alert"
             style={{ zIndex: 1000 }}
         >
             <span>
-                Lost internet connection
+                {message}
             </span>
             <span className="btn pt-0" onClick={handleOpen}>
                 <IoIosClose />
             </span>
         </div>
-    )
+    ) : null
 };
 
 export default Alert;

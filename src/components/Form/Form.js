@@ -37,7 +37,7 @@ const Form = (
     );
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="w-100" onSubmit={handleSubmit}>
             <Input
                 handleChange={handleChange}
                 name={name}

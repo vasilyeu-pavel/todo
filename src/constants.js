@@ -2,6 +2,8 @@ export const SET = 'SET';
 
 export const LOADING = 'LOADING';
 
+export const LOADED = 'LOADED';
+
 export const ADD = 'ADD';
 
 export const REMOVE = 'REMOVE';
