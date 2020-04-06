@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
@@ -72,6 +72,14 @@ Item.propTypes = {
     removeTask: PropTypes.func.isRequired,
 };
 
-export default styled(Item)`
+const StyledItem = styled(Item)`
     border-bottom: 1px solid #ededed;
 `;
+
+export default memo(
+    StyledItem,
+    (prevProps, nextProp) =>
+        prevProps.description === nextProp.description &&
+        prevProps.isCompleted === nextProp.isCompleted &&
+        prevProps.index === nextProp.index
+    );

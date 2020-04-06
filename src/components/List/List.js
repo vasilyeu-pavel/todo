@@ -26,13 +26,13 @@ const List = () => {
         <DndProvider backend={HTML5Backend}>
             {tasks
                 .sort(sortByIndex)
-                .map(task =>
+                .map((task, index) =>
                     <DraggableContainer
                         key={task.uid}
                         uid={task.uid}
                         handleDrop={actions.sortByDnD}
                     >
-                        <Item {...task} {...actions} />
+                        <Item {...task} index={index} {...actions} />
                     </DraggableContainer>
                 )
             }
