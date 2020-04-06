@@ -52,8 +52,10 @@ const StateProvider = ({ children }) => {
         return functions;
     };
 
+    const value = React.useMemo(() => ({ state, dispatch, dispatcher }), [state]);
+
     return (
-        <Provider value={{ state, dispatch, dispatcher }}>
+        <Provider value={value}>
             {children}
         </Provider>
     );

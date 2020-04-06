@@ -12,24 +12,26 @@ import {
     HANDLE_CONNECTION,
 } from '../../constants';
 
+export const mockTasks = [
+    {
+        uid: '1',
+        index: 0,
+        description: 'Test1',
+        isCompleted: false,
+    },
+    {
+        uid: '2',
+        index: 1,
+        description: 'Test2',
+        isCompleted: false,
+    },
+];
+
 export const initialState = {
     loading: false,
     isConnected: true,
     user: {},
-    tasks: [
-        // {
-        //     id: '1',
-        //     index: 0,
-        //     description: 'Test1',
-        //     isCompleted: false,
-        // },
-        // {
-        //     id: '2',
-        //     index: 1,
-        //     description: 'Test2',
-        //     isCompleted: false,
-        // },
-    ],
+    tasks: [],
 };
 
 export const reducer = (state, { payload, type }) => {

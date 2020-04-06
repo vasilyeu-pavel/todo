@@ -77,7 +77,7 @@ export const updateTask = ({ dispatch, getState, firebase }, task) => {
         firebase.update(task.uid, {...foundTask, description: task.description});
     }
 
-    dispatch({
+    return dispatch({
         type: UPDATE,
         payload: task,
     });

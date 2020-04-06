@@ -33,7 +33,7 @@ const Alert = ({ isConnected }) => {
             <span>
                 {message}
             </span>
-            <span className="btn pt-0" onClick={handleOpen}>
+            <span id="close-btn" className="btn test pt-0" onClick={handleOpen}>
                 <IoIosClose />
             </span>
         </div>
