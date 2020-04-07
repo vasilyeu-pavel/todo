@@ -10,6 +10,7 @@ import {
     LOADING,
     LOADED,
     HANDLE_CONNECTION,
+    SET_SYNC,
 } from '../../constants';
 
 export const mockTasks = [
@@ -43,6 +44,12 @@ export const reducer = (state, { payload, type }) => {
             };
         }
         case SET: {
+            return {
+                ...state,
+                tasks: payload,
+            }
+        }
+        case SET_SYNC: {
             return {
                 ...state,
                 loading: false,

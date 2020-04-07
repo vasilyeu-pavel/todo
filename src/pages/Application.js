@@ -11,11 +11,25 @@ import useConnect from '../hooks/useConnect';
 import useConnection from '../hooks/useConnection';
 
 import { isSignIn } from '../actions/auth';
-import { setLoading, getAllTask } from '../actions/tasks';
+import {
+    setLoading,
+    subscribeToDb,
+    getAllTask,
+    syncTasks
+} from '../actions/tasks';
 import Preloader from '../components/Preloader/Preloader';
 
+let i = 0;
+
 const Application = ({ className }) => {
-    const [{ user, loading, isConnected }, actions] = useConnect({ isSignIn, setLoading, getAllTask });
+    const [{ user, loading, isConnected }, actions] = useConnect({
+        isSignIn,
+        setLoading,
+        subscribeToDb,
+        getAllTask,
+        syncTasks
+    });
+    // хук для синхронизации состояний после потери конекшена
     useConnection();
 
     useEffect(() => {
@@ -23,10 +37,13 @@ const Application = ({ className }) => {
     }, []);
 
     useEffect(() => {
-        if (user.uid) {
+        // при первом рендере запрашиваем таски и показыаем лоадер, пока не ответила база
+        if (i < 1) {
             actions.setLoading();
+
             actions.getAllTask();
         }
+        i++;
     }, [user.uid]);
 
     if (loading) return <Preloader />;

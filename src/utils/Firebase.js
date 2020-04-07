@@ -32,7 +32,26 @@ class Firebase {
         });
     }
 
-    getAll() {
+    valueEventListener(update) {
+        return (snapshot) => {
+            let response = snapshot.val();
+
+            if (!response) {
+                response = []
+            }
+
+            update(Object
+                .entries(response)
+                .map(([firebaseId, task]) => {
+                    task.uid = firebaseId;
+
+                    return task;
+                }));
+        }
+    }
+
+    getAllSync() {
+        // get all tasks
         return this.firebase
             .database()
             .ref(`tasks-${this.user.uid}`)
@@ -49,7 +68,14 @@ class Firebase {
 
                         return task;
                     });
-        });
+            });
+    }
+
+    subscribeToDb(update) {
+        return this.firebase
+            .database()
+            .ref(`tasks-${this.user.uid}`)
+            .on('value', this.valueEventListener(update))
     }
 
     delete(taskUid) {
@@ -69,9 +95,16 @@ class Firebase {
         return this.firebase.database().ref(`tasks-${this.user.uid}`).set(data);
     }
 
+    // returned promise
     async push(data) {
-        // returned promise
+        // create new task
         const { key } = await this.firebase.database().ref(`tasks-${this.user.uid}`).push(data);
+
+        // save uid in task
+        await this.firebase.database().ref(`tasks-${this.user.uid}/${key}`).update({
+            ...data,
+            uid: key,
+        });
 
         return key;
     }

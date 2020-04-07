@@ -1,16 +1,19 @@
 import config from '../../config';
 
-import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE, SORT_DND, SET, LOADING } from '../../constants';
+import { ADD, COMPLETE_ALL, HANDLE_COMPLETE, REMOVE, UPDATE, SORT_DND, SET, LOADING, SET_SYNC } from '../../constants';
 import { withCompleted, withIndex } from '../../mixins';
 import { getTaskForRemoving } from '../../utils/tasks';
 
 export const setLoading = ({ dispatch }) => dispatch({ type: LOADING });
 
+// синхронизация тасков при востановлении конекшена
+// состояния localstorage синхронизируем с состоянием в базе
 export const syncTasks = ({ dispatch, firebase }) => {
     const { tasks: localTasks } = JSON.parse(localStorage.getItem(config.storageKey));
 
-    firebase.getAll()
+    firebase.getAllSync()
         .then(tasksFromDB => {
+            // console.log(tasksFromDB, localTasks);
             if (tasksFromDB.length > localTasks.length) {
                 return getTaskForRemoving(localTasks, tasksFromDB)
             }
@@ -20,23 +23,40 @@ export const syncTasks = ({ dispatch, firebase }) => {
             Promise.all(tasksToRemoving.map(task => firebase.delete(task.uid, null)))
         )
         .then(() => Promise.all(localTasks.map(task => firebase.update(task.uid, task))))
-        .then(() => firebase.getAll())
-        .then((tasks) =>
+        // .then(() => firebase.getAllSync())
+        .then(() =>
             dispatch({
-                type: SET,
-                payload: tasks,
+                type: SET_SYNC,
+                payload: localTasks,
             })
         );
-
 };
 
-export const getAllTask = ({ dispatch, getState, firebase }) => {
-    return firebase.getAll().then((tasks) => {
+// получить все таски с базы
+export const getAllTask = async ({ dispatch, getState, firebase }) => {
+    const update = (tasks) => dispatch({
+        type: SET_SYNC,
+        payload: tasks,
+    });
+
+    const tasks = await firebase.getAllSync(update);
+
+    return dispatch({
+        type: SET_SYNC,
+        payload: tasks,
+    });
+};
+
+// подписыпаемся на изменение в базе
+export const subscribeToDb = ({ dispatch, getState, firebase }) => {
+    const update = (tasks) => {
         return dispatch({
             type: SET,
             payload: tasks,
-        })
-    })
+        });
+    };
+
+    firebase.subscribeToDb(update);
 };
 
 export const addTask = ({ dispatch, getState, firebase }, values) => {
@@ -49,24 +69,16 @@ export const addTask = ({ dispatch, getState, firebase }, values) => {
         // нужно ждать ответа, база генерит uid
         return firebase
             .push(task)
-            .then((createdId) => (
-                dispatch({
-                    type: ADD,
-                    payload: {
-                        ...task,
-                        uid: createdId
-                    },
-                })))
             .catch(e => console.log(e));
+    } else {
+        return dispatch({
+            type: ADD,
+            payload: {
+                ...task,
+                uid: Date.now(),
+            },
+        });
     }
-
-    return dispatch({
-        type: ADD,
-        payload: {
-            ...task,
-            uid: Date.now(),
-        },
-    });
 };
 
 export const updateTask = ({ dispatch, getState, firebase }, task) => {
@@ -75,12 +87,12 @@ export const updateTask = ({ dispatch, getState, firebase }, task) => {
 
     if (isConnected) {
         firebase.update(task.uid, {...foundTask, description: task.description});
+    } else {
+        return dispatch({
+            type: UPDATE,
+            payload: task,
+        });
     }
-
-    return dispatch({
-        type: UPDATE,
-        payload: task,
-    });
 };
 
 export const completeAll = ({ getState ,dispatch, firebase }) => {
@@ -90,11 +102,11 @@ export const completeAll = ({ getState ,dispatch, firebase }) => {
         Promise.all(tasks.map((task) =>
             firebase.update(task.uid, {...task, isCompleted: true})
         ));
+    } else {
+        return dispatch({
+            type: COMPLETE_ALL,
+        })
     }
-
-    return dispatch({
-        type: COMPLETE_ALL,
-    });
 };
 
 export const handleComplete = ({ getState, dispatch, firebase }, uid) => {
@@ -103,12 +115,12 @@ export const handleComplete = ({ getState, dispatch, firebase }, uid) => {
 
     if (isConnected) {
         firebase.update(uid, {...foundTask, isCompleted: !foundTask.isCompleted});
+    } else {
+        return dispatch({
+            type: HANDLE_COMPLETE,
+            payload: {uid}
+        })
     }
-
-    return dispatch({
-        type: HANDLE_COMPLETE,
-        payload: { uid }
-    })
 };
 
 export const removeTask = ({ getState, dispatch, firebase }, uid) => {
@@ -127,13 +139,13 @@ export const removeTask = ({ getState, dispatch, firebase }, uid) => {
                 type: REMOVE,
                 payload: {uid}
             }));
+    } else {
+        // если соединение оборвалось, удалить локально
+        return dispatch({
+            type: REMOVE,
+            payload: {uid}
+        });
     }
-
-    // если соединение оборвалось, удалить локально
-    return dispatch({
-        type: REMOVE,
-        payload: {uid}
-    });
 };
 
 export const sortByDnD = ({ dispatch, getState, firebase }, { uid: dragItemId }, { uid: dropItemId }) => {

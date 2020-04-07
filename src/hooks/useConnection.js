@@ -11,7 +11,9 @@ const useConnection = () => {
     useEffect(() => {
         if (!isConnected) i++;
 
+        // отменяем показ и синхронизация при первом рендере
         if (isConnected && i > 1) {
+            console.log('syncTasks, useConnection');
             actions.setLoading();
 
             actions.syncTasks();

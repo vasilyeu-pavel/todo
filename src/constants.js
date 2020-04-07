@@ -1,5 +1,7 @@
 export const SET = 'SET';
 
+export const SET_SYNC = 'SET_SYNC';
+
 export const LOADING = 'LOADING';
 
 export const LOADED = 'LOADED';
