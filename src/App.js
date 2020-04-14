@@ -20,7 +20,7 @@ const App = () => (
                         key={route.path}
                         path={route.path}
                         exact={route.exact}
-                        component={props => (
+                        render={(props) => (
                             <route.layout {...props}>
                                 <route.component {...props} />
                             </route.layout>

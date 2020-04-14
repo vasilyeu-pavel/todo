@@ -8,10 +8,11 @@ export const setLoading = ({ dispatch }) => dispatch({ type: LOADING });
 
 // синхронизация тасков при востановлении конекшена
 // состояния localstorage синхронизируем с состоянием в базе
-export const syncTasks = ({ dispatch, firebase }) => {
+export const syncTasks = ({ dispatch, firebase, getState }) => {
+    const { user } = getState();
     const { tasks: localTasks } = JSON.parse(localStorage.getItem(config.storageKey));
 
-    firebase.getAllSync()
+    firebase.getAllSync(user)
         .then(tasksFromDB => {
             // console.log(tasksFromDB, localTasks);
             if (tasksFromDB.length > localTasks.length) {

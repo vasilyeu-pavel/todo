@@ -50,11 +50,11 @@ class Firebase {
         }
     }
 
-    getAllSync() {
+    getAllSync(user) {
         // get all tasks
         return this.firebase
             .database()
-            .ref(`tasks-${this.user.uid}`)
+            .ref(`tasks-${user.uid}`)
             .once('value')
             .then((snapshot) => {
                 const response = snapshot.val();
